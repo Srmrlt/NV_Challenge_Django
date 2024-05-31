@@ -1,0 +1,13 @@
+services:
+  server:
+    image: sergei1m/nv_challenge_django:latest
+    container_name: NV_Challenge
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./google_secrets:/app/google_secrets
+    env_file:
+      - .env
+    ports:
+      - "80:8000"

@@ -1,5 +1,4 @@
-credentials.json
-token.json
+google_secrets
 .env
 venv
 app/db.sqlite3
