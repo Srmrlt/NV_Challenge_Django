@@ -1,9 +1,7 @@
 from django.contrib import admin
-from django.urls import path
-
-from api.views import TextUploadView
+from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("upload/", TextUploadView.as_view(), name="text-upload"),
+    path("api/", include("api.urls")),
 ]
