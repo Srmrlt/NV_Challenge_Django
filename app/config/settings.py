@@ -110,3 +110,10 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# SetUp Google Drive connection
+GOOGLE_SCOPES: list[str] = [os.getenv("GOOGLE_SCOPES")]
+GOOGLE_TOKEN_FILE: str = os.getenv("GOOGLE_TOKEN_FILE")
+GOOGLE_CREDENTIALS_FILE: str = os.getenv("GOOGLE_CREDENTIALS_FILE")
+GOOGLE_FOLDER_ID: str = os.getenv("GOOGLE_FOLDER_ID")
