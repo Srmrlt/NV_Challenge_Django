@@ -1,12 +1,11 @@
 import logging
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-
 from api.serializers import TextUploadSerializer
 from api.services import GoogleDriveClient
 from config import settings
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 logger = logging.getLogger(__name__)
 
@@ -52,11 +51,9 @@ class TextUploadView(APIView):
                     {"message": "File upload success", "file_id": file_id},
                     status=status.HTTP_201_CREATED
                 )
-            else:
-                logger.error("File upload failed: No file ID returned")
-                return Response(
-                    {"error": "File upload failed"},
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                )
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            logger.error("File upload failed: No file ID returned")
+            return Response(
+                {"error": "File upload failed"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

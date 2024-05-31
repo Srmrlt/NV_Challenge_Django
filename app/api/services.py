@@ -2,14 +2,13 @@ import io
 import logging
 import os.path
 
+from config import settings
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaIoBaseUpload
-
-from config import settings
 
 logger = logging.getLogger("Google Drive API")
 
@@ -45,7 +44,7 @@ class GoogleDriveClient:
         """
         creds = self.load_credentials_from_file()
         if not creds or not creds.valid:
-            creds = self.refresh_or_create_token(creds)
+            return self.refresh_or_create_token(creds)
         return creds
 
     def load_credentials_from_file(self) -> Credentials | None:
@@ -57,9 +56,8 @@ class GoogleDriveClient:
         if os.path.exists(self.token_file):
             logger.info(f"Loading credentials from {self.token_file}")
             return Credentials.from_authorized_user_file(self.token_file, self.scopes)
-        else:
-            logger.warning(f"Token file {self.token_file} does not exist")
-            return None
+        logger.warning(f"Token file {self.token_file} does not exist")
+        return None
 
     def refresh_or_create_token(self, creds: Credentials | None) -> Credentials:
         """
